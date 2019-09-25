@@ -30,7 +30,7 @@ router.post('/', (req, res, next) => {
                     _id: result._id,
                     request: {
                         type: 'GET',
-                        url: 'http://localhost:3000/organizations/' + result._id
+                        url: 'https://event-maps-api.herokuapp.com/organizations/' + result._id
                     }
                 }
             })
