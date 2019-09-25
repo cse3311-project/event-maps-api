@@ -9,7 +9,8 @@ const mongoose = require( 'mongoose' );
 
 
 //connect database
-mongoose.connect( 'mongodb+srv://event-maps:' + process.env.MONGO_ATLAST_PW + '@event-maps-api-nxx4b.mongodb.net/test?retryWrites=true&w=majority',
+// mongoose.connect( 'mongodb+srv://event-maps:' + process.env.MONGO_ATLAST_PW + '@event-maps-api-nxx4b.mongodb.net/test?retryWrites=true&w=majority',
+mongoose.connect( 'mongodb+srv://event-maps:event-maps@event-maps-api-nxx4b.mongodb.net/test?retryWrites=true&w=majority',
 {
   useNewUrlParser: true,
   useUnifiedTopology: true
