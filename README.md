@@ -1,2 +1,2 @@
 # event-maps-api
-RESTful backend for Event Maps app
+RESTful API for Event Maps Application
