@@ -2,40 +2,175 @@ const express = require( 'express' );
 const router = express.Router();
 const mongoose = require('mongoose');
 
+const Event = require( '../models/event' );
 
 router.get('/', (req, res, next) => {
 
-    res.status(200).json({
-        message: 'Handling GET requests to /events'
+    // select fetches only specified fields
+    // map() maps to new array
+    Event.find()
+    .select()
+    .exec()
+    .then(docs => {
+        const response = {
+        count: docs.length,
+        Events: docs.map(doc => {
+            return {
+            name: doc.name,
+            organization: doc.organization,
+            address: doc.address,
+            longitude: doc.longitude,
+            latitude: doc.latitude,
+            category: doc.category,
+            tag: doc.category,
+            description: doc.description,
+            _id: doc._id,
+            request: {
+                type: 'GET',
+                url: 'https://event-maps-api.herokuapp.com/events/' + doc._id
+            }
+            }
+        })
+        };
+
+        if (docs.length >= 0) {
+        res.status(200).json(response);
+        }
+        else{
+        res.status(404).json({
+            message: 'No entires found'
+        });
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({
+        error : err
+        });
     });
 });
 
 router.post('/', (req, res, next) => {
-    // status 201 for resource creation
-    res.status(201).json({
-        message: 'Handling POST requests to /events'
-    });
+    const event = new Event({
+        _id: new mongoose.Types.ObjectId(),
+        name: req.body.name,
+        organization: req.body.organization,
+        address: req.body.address,
+        longitude: req.body.longitude,
+        latitude: req.body.latitude,
+        category: req.body.category,
+        tag: req.body.tag,
+        description: req.body.description,
+      });
+
+      // save mongoose models to database
+      event
+        .save()
+        .then(result => {
+          console.log(result);
+          res.status(201).json({
+
+            message : 'Created event succesfully',
+            eventCreated: {
+
+                organization: result.organization,
+                address: result.address,
+                longitude: result.longitude,
+                latitude: result.latitude,
+                category: result.category,
+                tag: result.tag,
+                description: result.description,
+
+                request: {
+                    type: 'GET',
+                    url: 'https://event-maps-api.herokuapp.com/events/' + result._id
+                }
+
+            }
+          });
+
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(500).json({error : err})
+        });
 });
 
 router.get('/:eventId', ( req, res, next ) => {
     const id = req.params.eventId;
 
-    res.status(200).json({
-        message: 'You passed event ID'
+    Event.findById( id )
+    .select()
+    .exec()
+    .then(doc => {
+      if (doc) {
+        res.status(200).json({
+          Event: doc,
+        });
+      }
+      else
+      {
+        res.status(404).json({message: 'No valid entry found for provided ID'});
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({error : err})
     });
+
 });
 
-
+// [
+// 	{"propName":	"address", "value": "1155 Union Cir, Denton, TX 76203"}
+// ]
 router.patch('/:eventId', ( req, res, next ) => {
-    res.status(200).json({
-        message: 'updated event'
+    const id = req.params.eventId;
+    const updateOps = {};
+
+    for (const ops of req.body) {
+        updateOps[ops.propName] = ops.value;
+    }
+
+    Event
+        .update({_id: id}, { $set: updateOps})
+        .exec()
+        .then(result => {
+            console.log(result);
+            res.status(200).json({
+            message: 'event successfully updated',
+            request: {
+                type: 'GET',
+                url: 'https://event-maps-api.herokuapp.com/events/' + id
+            }
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+            error: err
+            });
     });
 });
 
 router.delete('/:eventId', ( req, res, next ) => {
-    res.status(200).json({
-        message: 'deleted event'
-    });
+    const id = req.params.eventId;
+    Event.remove( { _id: id } )
+        .exec()
+        .then(result => {
+        res.status(200).json({
+            message: 'event deleted',
+            request: {
+                type: 'POST',
+                url: 'https://event-maps-api.herokuapp.com/events/'
+            }
+        });
+        })
+        .catch(err => {
+        console.log(err);
+        res.status(500).json({
+            error: err
+        });
+        });
 });
 
 
