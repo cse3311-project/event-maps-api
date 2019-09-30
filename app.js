@@ -5,6 +5,7 @@ const morgan = require( 'morgan' );
 const userRoutes = require( './api/routes/user' );
 const eventRoutes = require( './api/routes/events' );
 const organizationRoutes = require( './api/routes/organizations' );
+const rankRoutes = require( './api/routes/ranks' );
 const bodyParser = require('body-parser');
 const mongoose = require( 'mongoose' );
 
@@ -46,6 +47,7 @@ app.use((req, res, next) => {
 // sets up middleware
 // urls with /products will be forwarded
 //Routes which should handle requests
+app.use( '/ranks', rankRoutes );
 app.use( '/user', userRoutes );
 app.use( '/events', eventRoutes );
 app.use( '/organizations', organizationRoutes);

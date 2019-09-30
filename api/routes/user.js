@@ -16,38 +16,54 @@ router.post('/signup', (req, res, next) => {
           });
         }
         else {
-          bcrypt.hash(req.body.password, 10, (err, hash) =>{
-            if (err) {
-              return res.status(500).json({
-                  error: err
-              });
-            } else {
+            User.find( {username: req.body.username } )
+              .exec()
+              .then( user => {
 
-              console.log(hash);
-
-              const user = new User({
-                _id: new mongoose.Types.ObjectId(),
-                email: req.body.email,
-                password: hash
-              });
-
-              //status 201 when creating resource
-              user
-                .save()
-                .then(result => {
-                  console.log(result);
-                  res.status(201).json({
-                    message : 'User created'
+                if( user.length >= 1 ) {
+                  return res.status(409).json({
+                    message: 'username is already linked to an existing account'
                   });
-                })
-                .catch(err => {
-                  console.log(err);
-                  res.status(500).json({error : err})
-                });
-            }
-          });
+                } else {
+
+                  bcrypt.hash(req.body.password, 10, (err, hash) =>{
+                    if (err) {
+                      return res.status(500).json({
+                          error: err
+                      });
+                    } else {
+
+                      console.log(hash);
+
+                      const user = new User({
+                        _id: new mongoose.Types.ObjectId(),
+                        email: req.body.email,
+                        username: req.body.username,
+                        password: hash
+                      });
+
+                      //status 201 when creating resource
+                      user
+                        .save()
+                        .then(result => {
+                          console.log(result);
+                          res.status(201).json({
+                            message : 'User created'
+                          });
+                        })
+                        .catch(err => {
+                          console.log(err);
+                          res.status(500).json({error : err})
+                        });
+                    }
+                  });
+
+                }
+
+
+              });
         }
-      })
+      });
 });
 
 router.post('/login', exports.user_login = (req, res, next) => {
