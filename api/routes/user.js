@@ -67,15 +67,49 @@ router.post('/signup', (req, res, next) => {
 });
 
 router.post('/login', exports.user_login = (req, res, next) => {
-    User.find({ email: req.body.email})
+    User.find({ email: req.body.username })
       .exec()
       .then(user => {
         if (user.length < 1) {
-          return res.status(401).json({
-            message: 'Auth failed'
-          });
+
+          User.find({ username: req.body.username })
+            .exec()
+            .then( user => {
+
+              if ( user.length < 1 ) {
+                return res.status(401).json({
+                  message: 'Auth failed'
+                });
+              } else {
+
+                  bcrypt.compare( req.body.password, user[0].password, ( err, result) => {
+                    if (err) {
+                      return res.status(401).json({
+                        message: 'Auth failed'
+                      });
+
+                    }
+                    //result is the truth value of comparison
+                    if ( result ) {
+                      return res.status(200).json({
+                        message: 'Auth successful',
+                      });
+
+                    } else {
+                      return res.status(401).json({
+                        message: 'Auth failed'
+                      });
+                    }
+                  });
+                }
+
+
+
+            });
+          // User.find({ username: req.body})
 
         }else {
+
           bcrypt.compare( req.body.password, user[0].password, ( err, result) => {
             if (err) {
               return res.status(401).json({
@@ -85,18 +119,6 @@ router.post('/login', exports.user_login = (req, res, next) => {
             }
             //result is the truth value of comparison
             if ( result ) {
-
-            //   const token = jwt.sign(
-            //     {
-            //       email: user[0].email,
-            //       userId: user[0]._id
-            //     },
-            //     process.env.JWT_KEY,
-            //     {
-            //       expiresIn: "1h"
-            //     }
-            //   );
-
               return res.status(200).json({
                 message: 'Auth successful',
               });
