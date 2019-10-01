@@ -61,6 +61,8 @@ router.post('/', (req, res, next) => {
         category: req.body.category,
         tag: req.body.tag,
         description: req.body.description,
+        userId: req.body.userId
+
       });
 
       // save mongoose models to database
@@ -80,6 +82,7 @@ router.post('/', (req, res, next) => {
                 category: result.category,
                 tag: result.tag,
                 description: result.description,
+                userId: result.userId,
 
                 request: {
                     type: 'GET',

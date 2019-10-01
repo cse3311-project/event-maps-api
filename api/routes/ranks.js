@@ -9,6 +9,7 @@ router.get('/', (req, res, next) => {
 
     Rank.find()
     .select()
+    .sort( { points: 'desc' } )
     .exec()
     .then(docs => {
         const response = {
@@ -40,47 +41,34 @@ router.get('/', (req, res, next) => {
     });
 });
 
-router.post('/', (req, res, next) => {
-    User
-        .findById( req.body.userId )
-        .then( user => {
-            if( !user ) {
-                return res.status(404).json({
-                    message: 'User not found'
-                  });
+
+router.patch('/:userId', ( req, res, next ) => {
+    const id = req.params.userId;
+    const updateOps = {};
+
+    for (const ops of req.body) {
+        updateOps[ops.propName] = ops.value;
+    }
+
+    Rank
+        .update( { userId: id }, { $set: updateOps} )
+        .exec()
+        .then(result => {
+            console.log(result);
+            res.status(200).json({
+            message: 'rank successfully updated',
+            request: {
+                type: 'GET',
+                url: 'https://event-maps-api.herokuapp.com/ranks/' + id
             }
-
-            const rank = new Rank({
-                _id: new mongoose.Types.ObjectId(),
-                name: req.body.name,
-                points: req.body.points,
-                userId: req.body.userId
             });
-
-            return rank
-                        .save()
-                        .then(result => {
-                            console.log(result);
-                            res.status(201).json({
-                              message : 'rank added',
-                            });
-                          })
-                          .catch(err => {
-                            console.log(err);
-                            res.status(500).json({
-                              error: err
-                            });
-                          });
-
         })
         .catch(err => {
             console.log(err);
             res.status(500).json({
-            error : err
-            })
-        });
-
-
+            error: err
+            });
+    });
 });
 
 // export router with configured routes

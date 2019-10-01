@@ -5,7 +5,7 @@ const rankSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     name: { type: String, required: true},
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
-    points: { type: Number, required: true}
+    points: { type: Number, required: true, default: 0 }
   });
 
 

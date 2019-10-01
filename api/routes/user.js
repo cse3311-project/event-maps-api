@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const User = require( '../models/user' );
+const Event = require( '../models/event');
+const Rank = require( '../models/rank');
 var bcrypt = require( 'bcryptjs' );
 const mongoose = require('mongoose');
 
@@ -46,10 +48,30 @@ router.post('/signup', (req, res, next) => {
                       user
                         .save()
                         .then(result => {
-                          console.log(result);
-                          res.status(201).json({
-                            message : 'User created'
+                          // console.log( result.username );
+
+                          const rank = new Rank({
+                              _id: new mongoose.Types.ObjectId(),
+                              name: result.username,
+                              userId: result._id
                           });
+
+                          // create initial rank for user
+                          return rank
+                            .save()
+                            .then(result => {
+                                console.log(result);
+                                res.status(201).json({
+                                  message : 'User Created',
+                                });
+                              })
+                              .catch(err => {
+                                console.log(err);
+                                res.status(500).json({
+                                  error: err
+                                });
+                              });
+
                         })
                         .catch(err => {
                           console.log(err);
@@ -153,6 +175,33 @@ router.delete('/:userId', (req, res, next) => {
         error: err
       });
     });
+});
+
+
+router.get('/events/created', (req, res, next) =>  {
+    const id = req.body.id;
+    Event.find( {userId: id} )
+    .select()
+    .exec()
+    .then(doc => {
+      if ( doc.length > 0 ) {
+        res.status(200).json({
+          UserCreatedEvents: doc,
+        });
+      }
+      else
+      {
+        res.status(404).json({message: 'No valid entry found for provided ID'});
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({error : err})
+    });
+
+
+
+
 });
 
 //export such that module can be used in other files

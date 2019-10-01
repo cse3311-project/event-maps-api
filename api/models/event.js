@@ -11,6 +11,7 @@ const eventSchema = mongoose.Schema({
     category: { type: String, required: true},
     tag: {type: String},
     description: { type: String, required: false},
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true}
 
   });
 
