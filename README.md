@@ -1,8 +1,8 @@
 # event-maps-api
 RESTful API for Event Maps Application
-// CURRENT END POINTS 
+## End Points
 
-// USER
+## User
 // SIGN UP
 URL: https://event-maps-api.herokuapp.com/user/signup/
 REQUEST TYPE: POST
@@ -14,10 +14,10 @@ BODY:
 RESPONSE: 
   success: bool ( true if user created successfully )
   error: error message ( null if successs is true ) 
+## Events
 
 
-
-
+## Ranking List
 
 
 // GETTING ALL EVENTS
