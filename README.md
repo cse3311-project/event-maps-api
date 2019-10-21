@@ -1,4 +1,4 @@
-# event-maps-api
+# Event Maps API
 RESTful API for Event Maps Application
 ## End Points
 
@@ -17,7 +17,7 @@ RESPONSE:
 ## Events
 
 
-## Ranking List
+## Ranks
 
 
 // GETTING ALL EVENTS
