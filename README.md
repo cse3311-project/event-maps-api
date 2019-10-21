@@ -1,8 +1,8 @@
 # event-maps-api
 RESTful API for Event Maps Application
-## Backend repo
+## Backend repository
 https://github.com/cse3311-project/event-maps-api
-<br\>
+<br/>
 // CURRENT END POINTS 
 
 // USER
