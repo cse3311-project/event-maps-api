@@ -10,7 +10,7 @@ https://event-maps-api.herokuapp.com
 ## User 
 ## Sign up
 #### GET /user/signup/
-## Authentication
+#### Authentication
 jwc authentication token
 
 #### Path Parameters
