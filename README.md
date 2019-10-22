@@ -7,19 +7,24 @@ __Base URL__
 https://event-maps-api.herokuapp.com
 <br/>
 
-## Authentication
-
 ## User 
 ## Sign up
 #### GET /user/signup/
-Authentication: jwc authentication token
+## Authentication
+jwc authentication token
 
 #### Path Parameters
-n/a <br/>
+None <br/>
 
 #### Query String
 
-email 
+email     |   string   |   required, format validation( user@mail.com ) unique <br/>
+username  |   string   |   required, unique <br/>
+password  |   string   |   required  <br/>
+<br/>
+
+#### Responses
+
 URL: https://event-maps-api.herokuapp.com/user/signup/
 REQUEST TYPE: POST
 BODY: 
