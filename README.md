@@ -17,11 +17,11 @@ jwc authentication token
 None <br/>
 
 #### Query String
-| property-name | Type | required | format |
+| property-name | Type | Required | Format |
 | --- | --- | --- | --- |
-| email | string | True | example@mail.com |
-| username | string | True | None |
-| password | string | True | None |
+| email | String | True | example@mail.com |
+| username | String | True | None |
+| password | String | True | None |
 <br/>
 
 #### Responses
