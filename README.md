@@ -17,17 +17,14 @@ jwc authentication token
 None <br/>
 
 #### Query String
-
-email     |   string   |   required, format validation( user@mail.com ) unique <br/>
-username  |   string   |   required, unique <br/>
-password  |   string   |   required  <br/>
+| property-name | type | required | format |
+| --- | --- | --- | --- |
+| email | string | true | example@gmail.com |
+| username | string | true | None |
+| password | string | true | None |
 <br/>
 
 #### Responses
-
-URL: https://event-maps-api.herokuapp.com/user/signup/
-REQUEST TYPE: POST
-BODY: 
   email: string ( required, email-format validation and uniqueness ),
   username: string ( required, uniqueness ),
   password: string ( required, encrypted password is stored )
