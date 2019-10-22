@@ -19,7 +19,7 @@ None <br/>
 #### Query String
 | property-name | type | required | format |
 | --- | --- | --- | --- |
-| email | string | true | example@gmail.com |
+| email | string | true | example@mail.com |
 | username | string | true | None |
 | password | string | true | None |
 <br/>
