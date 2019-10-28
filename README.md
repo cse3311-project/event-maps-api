@@ -1,13 +1,30 @@
-# event-maps-api
+# Event Maps API
 RESTful API for Event Maps Application
 
-// CURRENT END POINTS 
+__Base URL__ 
+<br/>
+<br/>
+https://event-maps-api.herokuapp.com
+<br/>
 
-// USER
-// SIGN UP
-URL: https://event-maps-api.herokuapp.com/user/signup/
-REQUEST TYPE: POST
-BODY: 
+## User 
+## Sign up
+#### GET /user/signup/
+#### Authentication
+jwc authentication token
+
+#### Path Parameters
+None <br/>
+
+#### Query String
+| property-name | Type | Required | Format |
+| --- | --- | --- | --- |
+| email | String | True | example@mail.com |
+| username | String | True | None |
+| password | String | True | None |
+<br/>
+
+#### Responses
   email: string ( required, email-format validation and uniqueness ),
   username: string ( required, uniqueness ),
   password: string ( required, encrypted password is stored )
@@ -15,10 +32,10 @@ BODY:
 RESPONSE: 
   success: bool ( true if user created successfully )
   error: error message ( null if successs is true ) 
+## Events
 
 
-
-
+## Ranks
 
 
 // GETTING ALL EVENTS
