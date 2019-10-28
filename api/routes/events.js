@@ -15,21 +15,7 @@ router.get('/', (req, res, next) => {
         const response = {
         count: docs.length,
         Events: docs.map(doc => {
-            return {
-            name: doc.name,
-            organization: doc.organization,
-            address: doc.address,
-            longitude: doc.longitude,
-            latitude: doc.latitude,
-            category: doc.category,
-            tag: doc.category,
-            description: doc.description,
-            _id: doc._id,
-            request: {
-                type: 'GET',
-                url: 'https://event-maps-api.herokuapp.com/events/' + doc._id
-            }
-            }
+            return doc;
         })
         };
 
@@ -38,7 +24,9 @@ router.get('/', (req, res, next) => {
         }
         else{
         res.status(404).json({
+
             message: 'No entires found'
+
         });
         }
     })
@@ -55,13 +43,14 @@ router.post('/', (req, res, next) => {
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         organization: req.body.organization,
+        date: req.body.date,
         address: req.body.address,
         longitude: req.body.longitude,
         latitude: req.body.latitude,
         category: req.body.category,
         tag: req.body.tag,
         description: req.body.description,
-        userId: req.body.userId
+        userId: req.body.userId,
 
       });
 
@@ -76,6 +65,7 @@ router.post('/', (req, res, next) => {
             eventCreated: {
 
                 organization: result.organization,
+                date: result.date,
                 address: result.address,
                 longitude: result.longitude,
                 latitude: result.latitude,
@@ -95,7 +85,7 @@ router.post('/', (req, res, next) => {
         })
         .catch(err => {
           console.log(err);
-          res.status(500).json({error : err})
+          res.status(500).json({error : err});
         });
 });
 
@@ -108,7 +98,7 @@ router.get('/:eventId', ( req, res, next ) => {
     .then(doc => {
       if (doc) {
         res.status(200).json({
-          Event: doc,
+          Event: doc
         });
       }
       else
@@ -176,6 +166,23 @@ router.delete('/:eventId', ( req, res, next ) => {
         });
 });
 
+router.delete('/', (req, res, next ) => {
+    var currentDate = new Date();
+    console.log( currentDate.toString() );
+    Event.remove( { date: { $lt: currentDate.toString() } } )
+        .exec()
+        .then( result => {
+            res.status(200).json({
+                res: result
+            });
 
+        })
+        .catch( err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            });
+        });
+})
 // export router with configured routes
 module.exports = router;

@@ -33,11 +33,11 @@ router.post('/', (req, res, next) => {
                         url: 'https://event-maps-api.herokuapp.com/organizations/' + result._id
                     }
                 }
-            })
+            });
         })
         .catch(err => {
             console.log(err);
-            res.status(500).json({error : err})
+            res.status(500).json({error : err});
         });
 
 });

@@ -19,6 +19,7 @@ router.get('/', (req, res, next) => {
                 name: doc.name,
                 points: doc.points
             }
+
             })
         };
 

@@ -20,14 +20,15 @@ mongoose.connect( 'mongodb+srv://event-maps:event-maps@event-maps-api-nxx4b.mong
 );
 
 // Use default node.js promise implementation
-mongoose.Promise = global.Promise;+
+mongoose.Promise = global.Promise;
 
 
 //request logger
 app.use( morgan('dev') );
 //extract json and urlencoded data
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.use( bodyParser.urlencoded({extended: false}) );
+app.use( bodyParser.json()) ;
+// using jshint
 
 
 // preventing cors errors

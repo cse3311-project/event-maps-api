@@ -4,7 +4,10 @@
   "description": "RESTful API for Event Maps Application",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "debug1": "jshint app.js",
+    "debug2": "jshint api/models/",
+    "debug3": "jshint api/routes/"
   },
   "repository": {
     "type": "git",
@@ -17,6 +20,7 @@
   },
   "homepage": "https://github.com/cse3311-project/event-maps-api#readme",
   "devDependencies": {
+    "jshint": "^2.10.2",
     "nodemon": "^1.19.2"
   },
   "dependencies": {

@@ -75,7 +75,7 @@ router.post('/signup', (req, res, next) => {
                         })
                         .catch(err => {
                           console.log(err);
-                          res.status(500).json({error : err})
+                          res.status(500).json({error : err});
                         });
                     }
                   });
@@ -155,7 +155,7 @@ router.post('/login', exports.user_login = (req, res, next) => {
       })
       .catch(err => {
         console.log(err);
-        res.status(500).json({error : err})
+        res.status(500).json({error : err});
       });
 });
 
@@ -196,7 +196,7 @@ router.get('/events/created', (req, res, next) =>  {
     })
     .catch(err => {
       console.log(err);
-      res.status(500).json({error : err})
+      res.status(500).json({error : err});
     });
 
 
@@ -205,4 +205,4 @@ router.get('/events/created', (req, res, next) =>  {
 });
 
 //export such that module can be used in other files
-module.exports = router
+module.exports = router;

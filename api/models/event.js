@@ -4,12 +4,14 @@ const mongoose = require('mongoose');
 const eventSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     name: { type: String, required: false},
-    organization: { type: mongoose.Schema.Types.ObjectId, ref: 'Organization', required: false},
+    organization: { type: String, required: false},
+    date: { type: Date, required: false },
     address: { type: String, required: true},
     longitude: { type: Number, required: true},
     latitude: { type: Number, required: true},
     category: { type: String, required: true},
-    tag: {type: String},
+    likes: { type: Number, required: true, default: 0},
+    tag: {type: String, required: false},
     description: { type: String, required: false},
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true}
 
