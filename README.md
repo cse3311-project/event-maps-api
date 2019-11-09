@@ -17,21 +17,21 @@ jwc authentication token
 None <br/>
 
 #### Query String
-| property-name | Type | Required | Format |
+| Property Name | Type | Required | Format |
 | --- | --- | --- | --- |
 | email | String | True | example@mail.com |
 | username | String | True | None |
 | password | String | True | None |
 <br/>
 
-#### Responses
-  email: string ( required, email-format validation and uniqueness ),
-  username: string ( required, uniqueness ),
-  password: string ( required, encrypted password is stored )
-  
-RESPONSE: 
-  success: bool ( true if user created successfully )
-  error: error message ( null if successs is true ) 
+#### Response
+| Property Name | Value | 
+| --- | --- |
+| successful | True/False | 
+| message | message regarding user account creation |
+<br/>
+
+
 ## Events
 
 
