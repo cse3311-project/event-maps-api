@@ -120,7 +120,7 @@ router.post('/login', exports.user_login = (req, res, next) => {
                       return res.status(200).json({
                         successful: true,
                         message: 'Authentication successful',
-                        user_id: user._id
+                        user_id: user[0]._id
                       });
 
                     } else {
