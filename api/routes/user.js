@@ -14,6 +14,7 @@ router.post('/signup', (req, res, next) => {
       .then(user => {
         if (user.length >= 1) {
           return res.status(409).json({
+            successful: false,
             message: 'email is already linked to an existing account'
           });
         }
@@ -24,6 +25,7 @@ router.post('/signup', (req, res, next) => {
 
                 if( user.length >= 1 ) {
                   return res.status(409).json({
+                    successful: false,
                     message: 'username is already linked to an existing account'
                   });
                 } else {
@@ -62,7 +64,8 @@ router.post('/signup', (req, res, next) => {
                             .then(result => {
                                 console.log(result);
                                 res.status(201).json({
-                                  message : 'User Created',
+                                  successful: true,
+                                  message: 'User created successfully',
                                 });
                               })
                               .catch(err => {
@@ -107,19 +110,23 @@ router.post('/login', exports.user_login = (req, res, next) => {
                   bcrypt.compare( req.body.password, user[0].password, ( err, result) => {
                     if (err) {
                       return res.status(401).json({
-                        message: 'Auth failed'
+                        successful: false,
+                        message: 'Authentication failed, incorrect password'
                       });
 
                     }
                     //result is the truth value of comparison
                     if ( result ) {
                       return res.status(200).json({
-                        message: 'Auth successful',
+                        successful: true,
+                        message: 'Authentication successful',
+                        user_id: user._id
                       });
 
                     } else {
                       return res.status(401).json({
-                        message: 'Auth failed'
+                        successful: false,
+                        message: 'Authentication failed, account does not exist'
                       });
                     }
                   });

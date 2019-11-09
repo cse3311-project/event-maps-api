@@ -8,6 +8,8 @@ const organizationRoutes = require( './api/routes/organizations' );
 const rankRoutes = require( './api/routes/ranks' );
 const bodyParser = require('body-parser');
 const mongoose = require( 'mongoose' );
+const jQuery = require( 'jQuery' );
+
 
 
 //connect database
@@ -29,7 +31,6 @@ app.use( morgan('dev') );
 app.use( bodyParser.urlencoded({extended: false}) );
 app.use( bodyParser.json()) ;
 // using jshint
-
 
 // preventing cors errors
 app.use((req, res, next) => {
@@ -53,6 +54,12 @@ app.use( '/user', userRoutes );
 app.use( '/events', eventRoutes );
 app.use( '/organizations', organizationRoutes);
 
+// console.log('ji');
+
+
+// jQuery.get( "/localhost:3000/events/", ( data,status ) => {
+//   console.log( data );
+// });
 
 //error handling
 app.use((req, res, next) => {

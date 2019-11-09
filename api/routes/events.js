@@ -10,6 +10,7 @@ router.get('/', (req, res, next) => {
     // map() maps to new array
     Event.find()
     .select()
+    .sort( { lastUpdated: 'desc' } )
     .exec()
     .then(docs => {
         const response = {
@@ -39,11 +40,16 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
+
+    // record when last update was made
+    var update_date = new Date();
+
     const event = new Event({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         organization: req.body.organization,
-        date: req.body.date,
+        lastUpdated: update_date,
+        eventDate: req.body.eventDate,
         address: req.body.address,
         longitude: req.body.longitude,
         latitude: req.body.latitude,
@@ -62,24 +68,8 @@ router.post('/', (req, res, next) => {
           res.status(201).json({
 
             message : 'Created event succesfully',
-            eventCreated: {
+            eventCreated: result
 
-                organization: result.organization,
-                date: result.date,
-                address: result.address,
-                longitude: result.longitude,
-                latitude: result.latitude,
-                category: result.category,
-                tag: result.tag,
-                description: result.description,
-                userId: result.userId,
-
-                request: {
-                    type: 'GET',
-                    url: 'https://event-maps-api.herokuapp.com/events/' + result._id
-                }
-
-            }
           });
 
         })
@@ -183,6 +173,7 @@ router.delete('/', (req, res, next ) => {
                 error: err
             });
         });
+
 })
 // export router with configured routes
 module.exports = router;
