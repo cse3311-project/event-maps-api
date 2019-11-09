@@ -8,7 +8,7 @@ const organizationRoutes = require( './api/routes/organizations' );
 const rankRoutes = require( './api/routes/ranks' );
 const bodyParser = require('body-parser');
 const mongoose = require( 'mongoose' );
-const jQuery = require( 'jQuery' );
+// const jQuery = require( 'jQuery' );
 
 
 
