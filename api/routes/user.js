@@ -185,8 +185,8 @@ router.delete('/:userId', (req, res, next) => {
 });
 
 
-router.get('/events/created', (req, res, next) =>  {
-    const id = req.body.id;
+router.get('/events/created/:userId', (req, res, next) =>  {
+    const id = req.params.userId
     Event.find( {userId: id} )
     .select()
     .exec()
