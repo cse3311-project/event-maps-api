@@ -126,7 +126,7 @@ router.post('/login', exports.user_login = (req, res, next) => {
                     } else {
                       return res.status(401).json({
                         successful: false,
-                        message: 'Authentication failed, account does not exist'
+                        message: 'Authentication failed, account cannot be found in the system'
                       });
                     }
                   });
