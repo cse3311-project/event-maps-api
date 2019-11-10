@@ -56,7 +56,7 @@ router.post('/', (req, res, next) => {
         category: req.body.category,
         tag: req.body.tag,
         description: req.body.description,
-        userId: req.body.userId,
+        username: req.body.username,
 
       });
 

@@ -14,7 +14,8 @@ const eventSchema = mongoose.Schema({
     likes: { type: Number, required: true, default: 0},
     tag: {type: String, required: false},
     description: { type: String, required: false},
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true}
+    // userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true}
+    username: { type: String, required: true}
 
   });
 

@@ -33,6 +33,7 @@ router.post('/signup', (req, res, next) => {
                   bcrypt.hash(req.body.password, 10, (err, hash) =>{
                     if (err) {
                       return res.status(500).json({
+                          successful: false,
                           error: err
                       });
                     } else {
@@ -49,12 +50,12 @@ router.post('/signup', (req, res, next) => {
                       //status 201 when creating resource
                       user
                         .save()
-                        .then(result => {
+                        .then( result => {
                           // console.log( result.username );
 
                           const rank = new Rank({
                               _id: new mongoose.Types.ObjectId(),
-                              name: result.username,
+                              username: result.username,
                               userId: result._id
                           });
 
@@ -71,6 +72,7 @@ router.post('/signup', (req, res, next) => {
                               .catch(err => {
                                 console.log(err);
                                 res.status(500).json({
+                                  successful: false,
                                   error: err
                                 });
                               });
@@ -103,19 +105,12 @@ router.post('/login', exports.user_login = (req, res, next) => {
 
               if ( user.length < 1 ) {
                 return res.status(401).json({
-                  message: 'Auth failed'
+                  successful: false,
+                  message: 'Authentication failed, username/email is not linked to an existing account'
                 });
               } else {
 
                   bcrypt.compare( req.body.password, user[0].password, ( err, result) => {
-                    if (err) {
-                      return res.status(401).json({
-                        successful: false,
-                        message: 'Authentication failed, incorrect password'
-                      });
-
-                    }
-                    //result is the truth value of comparison
                     if ( result ) {
                       return res.status(200).json({
                         successful: true,
@@ -126,7 +121,7 @@ router.post('/login', exports.user_login = (req, res, next) => {
                     } else {
                       return res.status(401).json({
                         successful: false,
-                        message: 'Authentication failed, account cannot be found in the system'
+                        message: 'Authentication failed, incorrect password'
                       });
                     }
                   });
@@ -140,21 +135,24 @@ router.post('/login', exports.user_login = (req, res, next) => {
         }else {
 
           bcrypt.compare( req.body.password, user[0].password, ( err, result) => {
-            if (err) {
-              return res.status(401).json({
-                message: 'Auth failed'
-              });
+            // if (err) {
+            //   return res.status(401).json({
+            //     message: 'Auth failed'
+            //   });
 
-            }
+            // }
             //result is the truth value of comparison
             if ( result ) {
               return res.status(200).json({
-                message: 'Auth successful',
+                successful: true,
+                message: 'Authentication successful',
+                user_id: user[0]._id
               });
 
             } else {
               return res.status(401).json({
-                message: 'Auth failed'
+                successful: false,
+                message: 'Authentication failed, incorrect password'
               });
             }
           });
@@ -162,7 +160,10 @@ router.post('/login', exports.user_login = (req, res, next) => {
       })
       .catch(err => {
         console.log(err);
-        res.status(500).json({error : err});
+        res.status(500).json({
+          successful: false,
+          error : err
+        });
       });
 });
 
@@ -173,42 +174,67 @@ router.delete('/:userId', (req, res, next) => {
     .exec()
     .then(result => {
       res.status(200).json({
+        successful: true,
         message: 'User deleted',
       });
     })
     .catch(err => {
       console.log(err);
       res.status(500).json({
+        successful: false,
         error: err
       });
     });
 });
 
 
-router.get('/events/created/:userId', (req, res, next) =>  {
-    const id = req.params.userId
-    Event.find( {userId: id} )
+router.get('/:userId', (req, res, next ) => {
+  const id = req.params.userId
+  User.findById( id )
+  .exec()
+  .then( doc => {
+    res.status(200).json({
+      successful: true,
+      user: doc
+    });
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json({
+      successful: false,
+      error : err
+    });
+  });
+
+});
+router.get('/events/created/:username', (req, res, next) =>  {
+    const id = req.params.username
+    Event.find( {username: id} )
     .select()
     .exec()
     .then(doc => {
       if ( doc.length > 0 ) {
         res.status(200).json({
+          successful: true,
           UserCreatedEvents: doc,
+          message: 'events linked to user fetched'
         });
       }
       else
       {
-        res.status(404).json({message: 'No valid entry found for provided ID'});
+        res.status(404).json({
+          successful: false,
+          message: 'No events linked to user found',
+        });
       }
     })
     .catch(err => {
       console.log(err);
-      res.status(500).json({error : err});
+      res.status(500).json({
+        successful: false,
+        error : err
+      });
     });
-
-
-
-
 });
 
 //export such that module can be used in other files
