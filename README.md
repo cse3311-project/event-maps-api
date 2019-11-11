@@ -178,7 +178,37 @@ __None__
 | error | String | error message |
 
 ## Events
+## Create Event
+#### POST /events/
+### Authentication
+jwc authentication token
 
+### Path Parameters
+__None__
+### Query String
+| Property Name | Type | Required | Format |
+| --- | --- | --- | --- |
+| name| String | true | None |
+| organization | String | false | None |
+| eventDate | Date | true | YYYY-MM-DD |
+| address | String | false | None |
+| longitude | Number | true | None |
+| latitude | Number | true | None |
+| category | String | false | None |
+| tag | String | false | None |
+| description | String | false | None |
+| username | String | true | None |
+### Responses
+### 201
+| Property Name | Type | value | 
+| --- | --- | --- |
+| successful | bool | true | 
+| message | String | event created successfully |
+### 500
+| Property Name | Type | value | 
+| --- | --- | --- |
+| successful | bool | false | 
+| error | String | error message |
 
 ## Ranks
 
