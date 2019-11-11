@@ -5,8 +5,8 @@ RESTful API for Event Maps Application
 https://event-maps-api.herokuapp.com
 
 ## HTTP Status Codes
-__201:__ Successful, resource creation <br/><br/>
-__200:__ Successful <br/><br/>
+__200:__ Standard response for successful HTTP requests. <br/><br/>
+__201:__ The request has been fulfilled and resulted in a new resource being created. <br/><br/>
 __401:__ Unauthorized <br/><br/>
 __404:__ Not Found <br/><br/>
 __500:__ Internal server error <br/><br/>
