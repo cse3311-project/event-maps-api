@@ -163,7 +163,7 @@ __None__
 | Property Name | Type | Description |
 | --- | --- | --- |
 | successful | bool | true | 
-| UserCreatedEvents | Array | Array of Events created by the specified user ( see Event schema for properties ) |
+| UserCreatedEvents | Array | Array of Events created by the specified user ( [see Event schema](#event) for properties ) |
 | message | String | events linked to user fetched |
 ### 404
 | Property Name | Type | Description |
