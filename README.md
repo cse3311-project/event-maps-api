@@ -7,10 +7,10 @@ https://event-maps-api.herokuapp.com
 ## HTTP Status Codes
 __200:__ Standard response for successful HTTP requests. <br/><br/>
 __201:__ The request has been fulfilled and resulted in a new resource being created. <br/><br/>
-__401:__ Unauthorized <br/><br/>
-__404:__ Not Found <br/><br/>
-__500:__ Internal server error <br/><br/>
-__409:__ Conflict <br/><br/>
+__401:__ Error code response for missing or invalid authentication <br/><br/>
+__404:__ The server has not found anything matching the Request-URI <br/><br/>
+__409:__ The request could not be completed due to a conflict with the current state of the resource <br/><br />
+__500:__ The server encountered an unexpected condition which prevented it from fulfilling the request <br/><br/>
 
 # Schemas
 ## User
