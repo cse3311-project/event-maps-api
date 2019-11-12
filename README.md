@@ -48,7 +48,7 @@ __500:__ The server encountered an unexpected condition which prevented it from 
 
 # Endpoints
 # User 
-## Sign up
+## Sign Up
 #### POST /user/signup/
 ### Authentication
 jwc authentication token
@@ -78,7 +78,7 @@ __None__
 | successful | bool | false | 
 | error | String | error message |
 
-## Log in
+## Log In
 #### POST /user/login/
 ### Authentication
 jwc authentication token
@@ -128,7 +128,7 @@ __None__
 | successful | bool | false | 
 | error | String | error message |
 
-## delete User from system
+## Delete User 
 #### DEL /user/{userId}
 ### Authentication
 jwc authentication token
@@ -149,7 +149,7 @@ __None__
 | successful | bool | false | 
 | error | String | error message |
 
-## Fetch events created by user
+## Fetch Events Created By User
 #### GET /user/events/created/{username}
 ### Authentication
 jwc authentication token
