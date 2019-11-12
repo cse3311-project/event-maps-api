@@ -120,7 +120,7 @@ __None__
 ### 200
 | Property Name | Type | Description |
 | --- | --- | --- |
-| user | User | User account information( see User schema for properties ) |
+| user | User | User account information( [see User schema](#user) for properties ) |
 | message | String | Authentication Successful |
 ### 500
 | Property Name | Type | value | 
@@ -212,7 +212,6 @@ __None__
 
 ## Ranks
 
-[take me there](#get-user-info)
   
   
   
