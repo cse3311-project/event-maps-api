@@ -67,15 +67,19 @@ router.post('/', (req, res, next) => {
           console.log(result);
           res.status(201).json({
 
-            message : 'Created event succesfully',
-            eventCreated: result
+            successful: true,
+            eventId: result._id,
+            message : 'Created event succesfully'
 
           });
 
         })
         .catch(err => {
           console.log(err);
-          res.status(500).json({error : err});
+          res.status(500).json({
+            successful: false,
+            error : err
+            });
         });
 });
 
