@@ -120,16 +120,14 @@ router.patch('/:eventId', ( req, res, next ) => {
         .then(result => {
             console.log(result);
             res.status(200).json({
+            successful: true,
             message: 'event successfully updated',
-            request: {
-                type: 'GET',
-                url: 'https://event-maps-api.herokuapp.com/events/' + id
-            }
             });
         })
         .catch(err => {
             console.log(err);
             res.status(500).json({
+            successful: false,
             error: err
             });
     });
@@ -151,6 +149,7 @@ router.delete('/:eventId', ( req, res, next ) => {
         .catch(err => {
         console.log(err);
         res.status(500).json({
+            successful: false,
             error: err
         });
         });

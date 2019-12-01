@@ -15,7 +15,7 @@ router.post('/signup', (req, res, next) => {
         if (user.length >= 1) {
           return res.status(409).json({
             successful: false,
-            message: 'email is already linked to an existing account'
+            message: 'username/email is already linked to an existing account'
           });
         }
         else {
@@ -26,7 +26,7 @@ router.post('/signup', (req, res, next) => {
                 if( user.length >= 1 ) {
                   return res.status(409).json({
                     successful: false,
-                    message: 'username is already linked to an existing account'
+                    message: 'username/email is already linked to an existing account'
                   });
                 } else {
 
