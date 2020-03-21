@@ -9,12 +9,13 @@ const Task = require( '../models/task' );
 router.post('/', (req, res, next) => {
 
     // record when last update was made
-    // var update_date = new Date();
+    var datePosted = new Date();
 
     const task = new Task({
         _id: new mongoose.Types.ObjectId(),
         taskText: req.body.taskText,
         completed: req.body.completed,
+        datePosted: datePosted
       });
 
       // save mongoose models to database
@@ -41,6 +42,40 @@ router.post('/', (req, res, next) => {
 });
 
 
+router.get('/', (req, res, next) => {
+
+    // select fetches only specified fields
+    // map() maps to new array
+    Task.find()
+    .select()
+    .sort( { datePosted: 'desc' } )
+    .exec()
+    .then(docs => {
+        const response = {
+        count: docs.length,
+        tasks: docs.map(doc => {
+            return doc;
+        })
+        };
+
+        if (docs.length >= 0) {
+        res.status(200).json(response);
+        }
+        else{
+        res.status(404).json({
+            count: 0,
+            message: 'No entires found'
+
+        });
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({
+        error : err
+        });
+    });
+});
 
 router.delete('/:taskId', ( req, res, next ) => {
     const id = req.params.taskId;
