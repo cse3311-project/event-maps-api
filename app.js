@@ -37,7 +37,7 @@ app.use( bodyParser.json()) ;
 app.use((req, res, next) => {
     // deals with cors, gives access to any client
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-requested-Width, Content-Type, Accept, Authorization');
+    res.header('Access-Control-Allow-Headers', '*');
     res.header('Access-Control-Allow-Methods', '*');
     res.header('Access-Control-Allow-Origin', '*');
     if (req.method === 'OPTIONS') {
