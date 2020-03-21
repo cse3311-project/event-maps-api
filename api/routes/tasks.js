@@ -77,6 +77,31 @@ router.get('/', (req, res, next) => {
     });
 });
 
+
+router.get('/:taskId', ( req, res, next ) => {
+    const id = req.params.taskId;
+
+    Task.findById( id )
+    .select()
+    .exec()
+    .then(doc => {
+      if (doc) {
+        res.status(200).json({
+          task: doc
+        });
+      }
+      else
+      {
+        res.status(404).json({message: 'No valid entry found for provided ID'});
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({error : err})
+    });
+
+});
+
 router.delete('/:taskId', ( req, res, next ) => {
     const id = req.params.taskId;
     Task.remove( { _id: id } )
